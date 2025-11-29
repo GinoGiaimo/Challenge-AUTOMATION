@@ -6,12 +6,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.testng.Reporter;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class DriverFactory {
     public enum browsers {
@@ -42,13 +39,6 @@ public class DriverFactory {
                 break;
             }
             default: {
-                Reporter.log("No se selecciono un navegador");
-                ChromeOptions options = new ChromeOptions();
-                options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
-                options.addArguments("--headless"); // Activa el modo headless
-                System.setProperty("webdriver.chrome.driver", "/jenkins/app/chromedriver");
-                Reporter.log("Abrir navegador Chrome!");
-                driver = new ChromeDriver(options);
                 break;
             }
         }
@@ -88,12 +78,6 @@ public class DriverFactory {
     private static boolean isServiceUnavailable(WebDriver driver) {
         String pageSource = driver.getPageSource();
         return pageSource.contains("Application is not available") || driver.getTitle().contains("503");
-    }
-
-    private static Map<String, Object> getLogPreferences() {
-        Map<String, Object> logPrefs = new HashMap<>();
-        logPrefs.put(LogType.BROWSER, "ALL");
-        return logPrefs;
     }
 
     public static void CloseBrowser(WebDriver driver) {
